@@ -4,19 +4,25 @@ import gc
 import streamlit as st
 from crewai import Agent, Task, Crew
 from crewai_tools import ScrapeWebsiteTool
-from utils import get_openai_api_key
+from utils import get_openai_api_key,get_openai_model_name
 
 # Suppress warnings
 warnings.filterwarnings('ignore')
 
 # Set up API key and model environment
+
+
 openai_api_key = get_openai_api_key()
 if openai_api_key:
     os.environ["OPENAI_API_KEY"] = openai_api_key
 else:
     st.error("OpenAI API key not found. Please set up your API key correctly.")
 
-os.environ["OPENAI_MODEL_NAME"] = 'gpt-3.5-turbo'
+openai_model_name = get_openai_model_name()
+if openai_model_name:
+    os.environ["OPENAI_MODEL_NAME"] = openai_model_name
+else:
+    st.error("OpenAI API model name found. Please set up your model name correctly.")
 
 # Streamlit UI setup
 st.title("Customer Support - Plumbed")
